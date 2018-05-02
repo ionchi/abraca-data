@@ -1,7 +1,0 @@
-hdfs dfs -put /home/ionchi/IdeaProjects/Example1/data/project_data/Reviews.csv /user/hadoop/input/data
-
-hadoop jar /home/ionchi/IdeaProjects/Example1/target/Example1-1.0.jar progetto/TopNWords /user/hadoop/input/data/Reviews.csv /user/hadoop/output/project_results
-
-hadoop fs -cat /user/hadoop/output/project_results/*0
-
-hdfs dfs -rm -r /user/hadoop/output
