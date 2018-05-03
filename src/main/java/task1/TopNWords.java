@@ -1,5 +1,6 @@
 package task1;
 
+import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -30,12 +31,14 @@ public class TopNWords {
         job.setJobName("Top N");
         job.setJarByClass(TopNWords.class);
         job.setMapperClass(TopNWordsMapper.class);
-        //job.setCombinerClass(TopNWordsReducer.class);
         job.setReducerClass(TopNWordsReducer.class);
+
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
+
         FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
         FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
+
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 
@@ -57,9 +60,12 @@ public class TopNWords {
                 summary.set(parts[AmazonFFRConstants.SUMMARY]);
                 String cleanLine = summary.toString().toLowerCase().replaceAll(tokens, " ");
                 StringTokenizer itr = new StringTokenizer(cleanLine);
+                long time = Long.parseLong(parts[AmazonFFRConstants.TIME]);
+                String yearId = Utils.unix2StringYear(time);
                 while (itr.hasMoreTokens()) {
                     word.set(itr.nextToken().trim());
-                    context.write(word, one);
+                    String newKey = yearId + "\t" + word;
+                    context.write(new Text(newKey), one);
                 }
             }
         }
@@ -69,12 +75,19 @@ public class TopNWords {
      * The reducer retrieves every word and puts it into a Map: if the word already exists in the
      * map, increments its value, otherwise sets it to 1.
      */
-    public static class TopNWordsReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+    public static class TopNWordsReducer extends Reducer<Text, IntWritable, Text, Text> {
 
         private Map<Text, IntWritable> countMap = new HashMap<Text, IntWritable>();
+        private static final int YEARID = 0;
+        private static final int WORD = 1;
+        private Map<String, MultiValueMap> words4Year = new LinkedHashMap<String, MultiValueMap>();
 
         @Override
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+
+            String[] fields = key.toString().split("\t");
+            String year = fields[YEARID];
+            String word = fields[WORD];
 
             // computes the number of occurrences of a single word
             int sum = 0;
@@ -82,42 +95,60 @@ public class TopNWords {
                 sum += val.get();
             }
 
-            // puts the number of occurrences of this word into the map.
-            // We need to create another Text object because the Text instance
-            // we receive is the same for all the words
-            countMap.put(new Text(key), new IntWritable(sum));
+            if (!this.words4Year.containsKey(year)) {
+                MultiValueMap mvMap = new MultiValueMap();
+                mvMap.put(sum, word);
+                this.words4Year.put(year,mvMap);
+            }
+            else
+                this.words4Year.get(year).put(sum,word);
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-
-            Map<Text, IntWritable> sortedMap = Utils.sortByValues(countMap);
-
-            int counter = 0;
-            for (Text key : sortedMap.keySet()) {
-                if (counter++ == 10) {
-                    break;
-                }
-                context.write(key, sortedMap.get(key));
+            for (String year : this.words4Year.keySet()) {
+                List<Integer> scores = this.orderedScores(this.words4Year.get(year).keySet());
+                String out = this.topProducts(scores, year);
+                context.write(new Text(year), new Text(out));
             }
         }
-    }
 
-    /**
-     * The combiner retrieves every word and puts it into a Map: if the word already exists in the
-     * map, increments its value, otherwise sets it to 1.
-     */
-    public static class TopNWordsCombiner extends Reducer<Text, IntWritable, Text, IntWritable> {
+        private List<Integer> orderedScores(Set<Integer> set) {
+            ArrayList<Integer> scores = new ArrayList<Integer>();
+            scores.addAll(set);
+            scores.sort(Collections.reverseOrder());
+            return scores;
+        }
 
-        @Override
-        public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+        @SuppressWarnings("unchecked")
+        private String topProducts(List<Integer> scores, String dateID){
+            String out = "";
+            int counter = 0;
+            int lastScore = 0;
+            for (Integer score : scores) {
+                Iterator<String> it = this.words4Year.get(dateID).getCollection(score).iterator();
+                while(it.hasNext())	{
+                    if(counter<10) {
+                        out += " ";
+                        out += it.next();
+                        out += " ";
+                        out += score;
+                        counter++;
+                        lastScore = score;
+                    }
+                    else if(counter==10 && score == lastScore) {
+                        out += " ";
+                        out += it.next();
+                        out += " ";
+                        out += score;
 
-            // computes the number of occurrences of a single word
-            int sum = 0;
-            for (IntWritable val : values) {
-                sum += val.get();
+                    }
+                    else {
+                        break;
+                    }
+                }
             }
-            context.write(key, new IntWritable(sum));
+            return out;
         }
     }
 }
