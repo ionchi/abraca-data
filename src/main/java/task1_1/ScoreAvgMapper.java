@@ -15,7 +15,7 @@ public class ScoreAvgMapper extends
                 throws IOException,InterruptedException {
 
         if (key.get() != 0) {
-            String[] values = value.toString().split((","));
+            String[] values = value.toString().split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
             if (values.length != 10) {
                 return;
             }
