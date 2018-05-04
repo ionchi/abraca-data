@@ -1,18 +1,12 @@
 package task1_1;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
+
+import java.io.IOException;
+import java.util.*;
 
 public class ScoreAvgReducer extends Reducer<Text, IntWritable, Text, Text> {
 
@@ -74,7 +68,6 @@ public class ScoreAvgReducer extends Reducer<Text, IntWritable, Text, Text> {
 
     @SuppressWarnings("unchecked")
     private String topProducts(List<Float> scores, String dateID){
-        int topProdCounter = 0;
         String out = "";
         for (Float score : scores) {
             Iterator<String> it = this.score2products.get(dateID).getCollection(score).iterator();
@@ -83,7 +76,6 @@ public class ScoreAvgReducer extends Reducer<Text, IntWritable, Text, Text> {
                 out += it.next();
                 out += " ";
                 out += score;
-                topProdCounter++;
             }
         }
         return out;
