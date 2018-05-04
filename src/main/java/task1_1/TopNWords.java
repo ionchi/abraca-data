@@ -1,4 +1,4 @@
-package task1;
+package task1_1;
 
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.hadoop.conf.Configuration;

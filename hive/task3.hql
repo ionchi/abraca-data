@@ -27,4 +27,4 @@ FROM prodotti
 ON (t1.userId = t2.userId)
 GROUP BY t1.productId, t2.productId
 HAVING t1.productId > t2.productId
-ORDER BY t1.productId DESC
+ORDER BY t1.productId ASC
