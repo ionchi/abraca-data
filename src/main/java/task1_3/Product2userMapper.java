@@ -7,7 +7,7 @@ import utils.AmazonFFRConstants;
 
 import java.io.IOException;
 
-public class product2userMapper extends
+public class Product2userMapper extends
         Mapper<LongWritable, Text, Text, Text> {
 
     public void map(LongWritable key, Text value, Context context)
@@ -19,7 +19,7 @@ public class product2userMapper extends
                 return;
             }
             String Product = values[AmazonFFRConstants.PRODUCT_ID];
-            String User =values[AmazonFFRConstants.USER_ID];
+            String User = values[AmazonFFRConstants.USER_ID];
 
             context.write(new Text(User), new Text(Product));
         }

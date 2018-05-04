@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 
-public class product2user {
+public class Product2user {
 
 
     public static void main(String[] args) throws Exception {
@@ -23,17 +23,17 @@ public class product2user {
         Job job1 = null;
         Job job2 = null;
         try {
-            job1 = new Job(new Configuration(), product2user.class.getSimpleName()+"1");
-            job2 = new Job(new Configuration(), product2user.class.getSimpleName()+"2");
+            job1 = new Job(new Configuration(), Product2user.class.getSimpleName()+"1");
+            job2 = new Job(new Configuration(), Product2user.class.getSimpleName()+"2");
         } catch (IOException e) {
             System.out.println("[ERR] Error while creating new Job");
             e.printStackTrace();
             System.exit(1);
         }
 
-        job1.setJarByClass(product2user.class);
-        job1.setMapperClass(product2userMapper.class);
-        job1.setReducerClass(product2userReduce.class);
+        job1.setJarByClass(Product2user.class);
+        job1.setMapperClass(Product2userMapper.class);
+        job1.setReducerClass(Product2userReduce.class);
 
         FileInputFormat.addInputPath(job1, new Path(args[0]));
         FileOutputFormat.setOutputPath(job1, tmpPath);
@@ -44,9 +44,9 @@ public class product2user {
         job1.setOutputValueClass(Text.class);
         job1.waitForCompletion(true);
 
-        job2.setJarByClass(product2user.class);
-        job2.setMapperClass(product2userMapper2.class);
-        job2.setReducerClass(product2userReduce2.class);
+        job2.setJarByClass(Product2user.class);
+        job2.setMapperClass(Product2userMapper2.class);
+        job2.setReducerClass(Product2userReduce2.class);
 
         FileInputFormat.addInputPath(job2, tmpPath);
         FileOutputFormat.setOutputPath(job2,new Path(args[1]) );

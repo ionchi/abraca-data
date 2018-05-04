@@ -56,6 +56,7 @@ public class TopNWords {
         @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             if (key.get() != 0) {
+                //TODO introdurre un CSV parser al posto dello split che è troppo lento
                 String[] parts = value.toString().split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 summary.set(parts[AmazonFFRConstants.SUMMARY]);
                 String cleanLine = summary.toString().toLowerCase().replaceAll(tokens, " ");

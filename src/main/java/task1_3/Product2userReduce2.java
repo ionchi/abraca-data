@@ -6,7 +6,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class product2userReduce2 extends
+public class Product2userReduce2 extends
         Reducer<Text, IntWritable, Text, IntWritable> {
 
     public void reduce(Text key, Iterable<IntWritable> values,

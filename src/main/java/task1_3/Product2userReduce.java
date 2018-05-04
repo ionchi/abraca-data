@@ -1,6 +1,5 @@
 package task1_3;
 
-import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -8,9 +7,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class product2userReduce extends Reducer<Text, Text, Text, Text> {
-
-    MultiValueMap map = new MultiValueMap();
+public class Product2userReduce extends Reducer<Text, Text, Text, Text> {
 
     @Override
     public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
