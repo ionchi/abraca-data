@@ -5,8 +5,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 public class Product2userReduce extends Reducer<Text, Text, Text, Text> {
