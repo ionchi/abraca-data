@@ -1,7 +1,5 @@
--- Conteggio di tutte le parole del campo summary
--- salva come parola più frequente lo spazio vuoto, per questo in output da 1 a 10 solo
-
-CREATE TABLE IF NOT EXISTS prodotti (id INT, productId STRING, userId STRING, profileName STRING, helpfulnessNumerator INT, helpfulnessDenominator INT, score INT, time BIGINT, summary STRING, text STRING) ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde';
+CREATE TABLE IF NOT EXISTS prodotti (id INT, productId STRING, userId STRING, profileName STRING, helpfulnessNumerator INT, helpfulnessDenominator INT, score INT, time BIGINT, summary STRING, text STRING)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde';
 
  LOAD DATA LOCAL INPATH './Reviews.csv' OVERWRITE INTO TABLE prodotti;
 
