@@ -48,6 +48,25 @@
             <artifactId>hive-exec</artifactId>
             <version>2.3.0</version>
         </dependency>
+
+
+        <!-- SPARK -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_2.11</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.11</artifactId>
+            <version>2.2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+            <version>2.2.1</version>
+        </dependency>
     </dependencies>
 
 </project>
