@@ -12,8 +12,10 @@ import java.util.List;
 public class ReviewMining {
 
     private String pathToFile;
+    private JavaRDD<Review> reviews;
 
-    public ReviewMining(String file){
+    public ReviewMining(String file, JavaRDD<Review> reviews){
+        this.reviews = reviews;
         this.pathToFile = file;
     }
 
@@ -30,7 +32,7 @@ public class ReviewMining {
 
     // dividere il summary in lista di parole
     public JavaRDD<String> wordsInSummary() {
-        JavaRDD<Review> reviews = loadData();
+        //JavaRDD<Review> reviews = loadData();
         JavaRDD<String> words =
                 reviews.flatMap(review -> Arrays.asList(review.getSummary().split(" ")).iterator())
                         .filter(word -> word.length() > 1);
@@ -51,7 +53,7 @@ public class ReviewMining {
         List<Tuple2<Integer, String>> mostMentioned =
                 counts.mapToPair(pair -> new Tuple2<>(pair._2(), pair._1()))
                         .sortByKey(false)
-                        .take(10);
+                        .take(40);
         return mostMentioned;
     }
 }
