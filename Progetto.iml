@@ -9,6 +9,44 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-core_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:chill_2.11:0.8.4" level="project" />
+    <orderEntry type="library" name="Maven: com.twitter:chill-java:0.8.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-launcher_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-kvstore_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.7" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-network-common_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-network-shuffle_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-unsafe_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.lz4:lz4-java:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.luben:zstd-jni:1.3.2-2" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.17.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-core:3.1.5" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-jvm:3.1.5" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-json:3.1.5" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-graphite:3.1.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.7.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-scala_2.11:2.6.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-reflect:2.11.8" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-paranamer:2.7.9" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.py4j:py4j:0.10.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-tags_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-streaming_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-sql_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.univocity:univocity-parsers:2.5.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-sketch_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.spark:spark-catalyst_2.11:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.4" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.orc:orc-core:nohive:1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: io.airlift:aircompressor:0.8" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.orc:orc-mapreduce:nohive:1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.arrow:arrow-vector:0.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.arrow:arrow-format:0.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.arrow:arrow-memory:0.8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.carrotsearch:hppc:0.7.2" level="project" />
+    <orderEntry type="library" name="Maven: com.vlkan:flatbuffers:1.2.0-3f79e055" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hadoop:hadoop-core:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.2" level="project" />

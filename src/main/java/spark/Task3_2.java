@@ -27,8 +27,6 @@ public class Task3_2 implements Serializable {
     }
 
     private void run(String inputPath, String outputPath) {
-
-        //String logFile = "Esercizi/Reviews.csv";
         SparkConf conf = new SparkConf().setAppName(this.getClass().getSimpleName());
         JavaSparkContext jsc = new JavaSparkContext(conf);
         JavaRDD<String> input = jsc.textFile(inputPath).cache();
@@ -40,10 +38,8 @@ public class Task3_2 implements Serializable {
                 .mapToPair(row -> this.selectScore(row))
                 .sortByKey()
                 .saveAsTextFile(outputPath);
-
         jsc.stop();
         jsc.close();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -63,13 +59,11 @@ public class Task3_2 implements Serializable {
         for(String year : years) {
             Iterator<Float> it = score2products.getCollection(year).iterator();
             while(it.hasNext()) {
-
                 out += "\n";
                 out += "              ";
                 out += year;
                 out += " ";
                 out += it.next();
-
             }
         }
         return new Tuple2<>(row._1,out);
