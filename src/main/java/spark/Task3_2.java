@@ -14,22 +14,24 @@ import static utils.AmazonFFRConstants.PRODUCT_ID;
 import static utils.AmazonFFRConstants.SCORE;
 import static utils.AmazonFFRConstants.TIME;
 
-public class task3_2 implements Serializable {
+public class Task3_2 implements Serializable {
 
 
     public static void main(String[] args) {
+        String inputPath = args[0];
+        String outputPath = args[1];
         long start = System.currentTimeMillis();
-        new task3_2().run();
+        new Task3_2().run(inputPath, outputPath);
         long elapsed = System.currentTimeMillis() - start;
         System.out.println("TEMPO TRASCORSO = "+elapsed/1000.0+" secondi.");
     }
 
-    private void run() {
+    private void run(String inputPath, String outputPath) {
 
-        String logFile = "Esercizi/Reviews.csv";
+        //String logFile = "Esercizi/Reviews.csv";
         SparkConf conf = new SparkConf().setAppName(this.getClass().getSimpleName());
         JavaSparkContext jsc = new JavaSparkContext(conf);
-        JavaRDD<String> input = jsc.textFile(logFile).cache();
+        JavaRDD<String> input = jsc.textFile(inputPath).cache();
         input.mapToPair(row -> this.splitRow(row))
                 .reduceByKey((a,b) ->  new Tuple2<Integer, Float>(a._1 + b._1, a._2 + b._2))
                 .mapValues(a -> a._1 / a._2)
@@ -37,7 +39,7 @@ public class task3_2 implements Serializable {
                 .groupByKey()
                 .mapToPair(row -> this.selectScore(row))
                 .sortByKey()
-                .saveAsTextFile("Esercizi/outputspark");
+                .saveAsTextFile(outputPath);
 
         jsc.stop();
         jsc.close();
@@ -73,8 +75,6 @@ public class task3_2 implements Serializable {
         return new Tuple2<>(row._1,out);
     }
 
-
-
     private Tuple2<String, String> changeMapping(Tuple2<String, Float> tuple) {
         StringTokenizer st = new StringTokenizer(tuple._1, "\t");
         String yearId = st.nextToken();
@@ -85,13 +85,12 @@ public class task3_2 implements Serializable {
     private Tuple2<String, Tuple2<Integer, Float>> splitRow(String row) {
         String[] fields = row.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
         if (fields.length != 10) {
-            return new Tuple2<>("404" + "\t" + "Errore", new Tuple2<>(2, new Float(1)));
+            return new Tuple2<>("404" + "\t" + "Errore", new Tuple2<>(2, 1f));
         }
         String productID = fields[PRODUCT_ID];
         long time = Long.parseLong(fields[TIME]);
         int score = Integer.parseInt(fields[SCORE]);
         String yearId = Utils.unix2StringYear(time);
-        return new Tuple2<>(yearId + "\t" + productID , new Tuple2<>(score, new Float(1)));
+        return new Tuple2<>(yearId + "\t" + productID , new Tuple2<>(score, 1f));
     }
-
 }
