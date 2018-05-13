@@ -30,23 +30,23 @@ public class Task3_1 implements Serializable {
         JavaRDD<String> input = jsc.textFile(inputPath).cache();
 
         input.map(row -> this.splitRow(row))
-                .flatMap(x -> Arrays.asList(x._2).listIterator())
-                .filter(x -> !x.equals(""))
+                .flatMap(x -> Arrays.asList(x._2).listIterator()) // divide il summary in parole (che sono anno+parola)
+                .filter(x -> !x.equals("")) // elimina le parole vuote
                 .mapToPair(word -> new Tuple2<>(word, 1))
                 .reduceByKey((x, y) -> x + y)
                 .mapToPair(pair -> new Tuple2<>(pair._2(), pair._1()))
-                .sortByKey(false)
-                .mapToPair(x -> changeKey(x._2,x._1))
-                .groupByKey()
-                .mapToPair(x -> topNWords(x._1,x._2))
-                .sortByKey(true)
+                .sortByKey(false) // ordinamento delle parole in base alle occorrenze
+                .mapToPair(x -> changeKey(x._2,x._1)) // cambio key in anno
+                .groupByKey() // group by anno
+                .mapToPair(x -> topNWords(x._1,x._2)) // selezione delle prime 10 parole per anno (già ordinate prima)
+                .sortByKey(true) // ordinamento opzionale in base agli anni
                 .saveAsTextFile(outputPath);
 
-        //jsc.parallelize(topTen).saveAsTextFile(outputPath);
         jsc.stop();
         jsc.close();
     }
 
+    // divisione iniziale di ogni riga in (anno, array[anno+parola])
     private Tuple2<String, String[]> splitRow(String row) {
         String[] fields = row.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
         if (fields.length != 10) {
@@ -66,6 +66,7 @@ public class Task3_1 implements Serializable {
         return new Tuple2<>(year, words);
     }
 
+    // cambia le righe da (anno+parola, numero occorrenze) -> (anno, parola+occorrenze)
     private Tuple2<Integer, String> changeKey(String yearWord, Integer count) {
         String[] key = yearWord.split(" ");
         String newValue = key[1] + " - " + count;
