@@ -1,0 +1,11 @@
+Locale
+    Dataset originale (568454 righe)
+        - task1_1: 95.56 secondi
+        - task1_2: 87.57 secondi
+        - task1_3: 97.63 secondi
+        - task2_1: 41.14 secondi
+        - task2_2: 35.17 secondi
+        - task2_3: 88.12 secondi
+        - task3_1: 59.90 secondi
+        - task3_2: 61.23 secondi
+        - task3_3: 121.1 secondi
