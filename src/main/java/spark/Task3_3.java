@@ -110,14 +110,17 @@ public class Task3_3 {
     }
 
     public static void main(String[] args) throws Exception {
-       /* if (args.length < 2) {
-            System.err.println("Usage:");
+        if (args.length < 2) {
+            System.err.println("Usage: spar-submit ... <input> <output>");
             System.exit(1);
-        }*/
+        }
+        long start = System.currentTimeMillis();
+        String inputPath = args[0];
+        String outputPath = args[1];
         SparkConf sparkConf = new SparkConf().setAppName("JavaSparkSQL");
         JavaSparkContext ctx = new JavaSparkContext(sparkConf);
         SQLContext sqlContext = new SQLContext(ctx);
-        JavaRDD<AmazonTable> people = ctx.textFile("Esercizi/Reviews.csv").map(
+        JavaRDD<AmazonTable> people = ctx.textFile(inputPath).map(
                 new Function<String, AmazonTable>() {
                     @Override
                     public AmazonTable call(String line) {
@@ -131,7 +134,7 @@ public class Task3_3 {
                 });
         Dataset<Row> peopleDF = sqlContext.createDataFrame(people, AmazonTable.class);
         peopleDF.createOrReplaceTempView("people");
-        Dataset<Row> teenagersDF = sqlContext.sql("SELECT\n" +
+        Dataset<Row> pairsDF = sqlContext.sql("SELECT\n" +
                 "t1.productId AS item1,\n" +
                 "t2.productId AS item2,\n" +
                 "COUNT(1) AS cnt\n" +
@@ -149,6 +152,8 @@ public class Task3_3 {
                 "GROUP BY t1.productId, t2.productId\n" +
                 "HAVING t1.productId > t2.productId\n" +
                 "ORDER BY t1.productId ASC");
-        teenagersDF.toJavaRDD().saveAsTextFile("Esercizi/outputspark_sql");
-
-    }}
+        pairsDF.toJavaRDD().saveAsTextFile(outputPath);
+        long elapsed = System.currentTimeMillis() - start;
+        System.out.println("TEMPO TRASCORSO = " + elapsed / 1000.0 + " secondi.");
+    }
+o}
