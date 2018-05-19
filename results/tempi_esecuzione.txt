@@ -1,11 +1,85 @@
+Metodo test: media fra 3 misurazioni con il comando time
+
 Locale
+    Dataset 1/2 (284256 righe)
+        - task1_1: 47.32 secondi
+        - task1_2: 42.46 secondi
+        - task1_3: 52.63 secondi
+        - task2_1: 30.36 secondi
+        - task2_2: 26.88 secondi
+        - task2_3: 47.71 secondi
+        - task3_1: 28.16 secondi
+        - task3_2: 25.86 secondi
+        - task3_3: 63.36 secondi
     Dataset originale (568454 righe)
         - task1_1: 95.56 secondi
         - task1_2: 87.57 secondi
         - task1_3: 97.63 secondi
-        - task2_1: 41.14 secondi
-        - task2_2: 35.17 secondi
-        - task2_3: 88.12 secondi
+        - task2_1: 51.14 secondi
+        - task2_2: 55.17 secondi
+        - task2_3: 98.12 secondi
         - task3_1: 59.90 secondi
         - task3_2: 61.23 secondi
         - task3_3: 121.1 secondi
+    Dataset x2 (1136908 righe)
+        - task1_1: 160.4 secondi
+        - task1_2: 162.6 secondi
+        - task1_3: 159.6 secondi
+        - task2_1: 53.54 secondi
+        - task2_2: 41.88 secondi
+        - task2_3: 99.96 secondi
+        - task3_1: 82.04 secondi
+        - task3_2: 76.94 secondi
+        - task3_3: 141.8 secondi
+    Dataset x3 (1705362 righe)
+        - task1_1: 238.4 secondi
+        - task1_2: 219.5 secondi
+        - task1_3: 229.3 secondi
+        - task2_1: 56.96 secondi
+        - task2_2: 45.29 secondi
+        - task2_3: 97.51 secondi
+        - task3_1: 102.9 secondi
+        - task3_2: 100.2 secondi
+        - task3_3: 181.2 secondi
+
+AWS (Configurazione: 1 master e 2 slave m3.xlarge - 8 vCore, 15GB RAM, 80GB SSD Storage + Hive usa il manager YARN)
+    Dataset 1/2 (284256 righe)
+        - task1_1: 64.97 secondi
+        - task1_2: 62.92 secondi
+        - task1_3: 92.59 secondi
+        - task2_1: 32.31 secondi
+        - task2_2: 31.14 secondi
+        - task2_3: 52.79 secondi
+        - task3_1: 51.62 secondi
+        - task3_2: 50.75 secondi
+        - task3_3: 109.5 secondi
+    Dataset originale (568454 righe)
+        - task1_1: 73.33 secondi
+        - task1_2: 74.47 secondi
+        - task1_3: 100.5 secondi
+        - task2_1: 42.66 secondi
+        - task2_2: 41.22 secondi
+        - task2_3: 83.56 secondi
+        - task3_1: 71.07 secondi
+        - task3_2: 71.03 secondi
+        - task3_3: 115.2 secondi
+    Dataset x2 (1136908 righe)
+        - task1_1: 81.29 secondi
+        - task1_2: 90.21 secondi
+        - task1_3: 115.7 secondi
+        - task2_1: 47.76 secondi
+        - task2_2: 48.49 secondi
+        - task2_3: 76.15 secondi
+        - task3_1: 77.81 secondi
+        - task3_2: 77.04 secondi
+        - task3_3: 118.1 secondi
+    Dataset x3 (1705362 righe)
+        - task1_1: 141.6 secondi
+        - task1_2: 133.3 secondi
+        - task1_3: 166.9 secondi
+        - task2_1: 65.17 secondi
+        - task2_2: 63.63 secondi
+        - task2_3: 96.01 secondi
+        - task3_1: 103.7 secondi
+        - task3_2: 100.6 secondi
+        - task3_3: 139.3 secondi
